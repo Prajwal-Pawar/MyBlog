@@ -1,7 +1,10 @@
+import Navbar from "./Navbar";
+import "../styles/app.css";
+
 function App() {
   return (
     <div className="App">
-      <h1>App rendered</h1>
+      <Navbar />
     </div>
   );
 }

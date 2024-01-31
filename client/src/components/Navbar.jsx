@@ -1,18 +1,23 @@
+import { Link } from "react-router-dom";
+import "../styles/navbar.css";
+
 const Navbar = () => {
   return (
-    <div className="navbar flex flex-row">
+    <div className="navbar">
       <div className="left">
-        <h1 className="title">MyBlog</h1>
+        <h1 id="title">MyBlog</h1>
       </div>
 
       <div className="right">
-        <ul>
-          <li>sign up</li>
-          <li>sign in</li>
+        <ul id="nav-list">
+          <li className="nav-item">
+            <Link to={``}>sign up</Link>
+          </li>
+          <li className="nav-item">
+            <Link to={``}>sign in</Link>
+          </li>
         </ul>
       </div>
-
-      <button className="">click</button>
     </div>
   );
 };

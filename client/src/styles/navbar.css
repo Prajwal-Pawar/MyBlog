@@ -1,0 +1,22 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+#title {
+  font-size: 1.3rem;
+}
+
+.right {
+}
+
+#nav-list {
+  display: flex;
+  list-style: none;
+}
+
+.nav-item {
+  font-size: 1.1rem;
+  margin-right: 20px;
+}
