@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import SignUp from "../pages/SignUp";
 import Navbar from "./Navbar";
-import "../styles/app.css";
 
 function App() {
   return (
