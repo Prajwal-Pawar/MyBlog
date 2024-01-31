@@ -3,10 +3,9 @@
   src: url("../assets/fonts/montserrat.ttf");
 }
 
-:root {
-  --primary-bg: #f5f5f5;
-  --primary-text: #1c1c1c;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
   margin: 0;
@@ -15,12 +14,12 @@
   font-family: "montserrat";
 }
 
-body {
+/* body {
   background-color: var(--primary-bg);
   color: var(--primary-text);
-}
+} */
 
 a {
   text-decoration: none;
-  color: var(--primary-text);
+  /* color: var(--primary-text); */
 }
