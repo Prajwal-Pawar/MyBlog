@@ -1,4 +1,15 @@
+@font-face {
+  font-family: "montserrat";
+  src: url("../assets/fonts/montserrat.ttf");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
+
+  font-family: "montserrat";
 }
