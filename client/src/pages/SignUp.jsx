@@ -31,28 +31,31 @@ const SignUp = () => {
   };
 
   return (
-    <div className="signup">
-      <h1 id="signup-title">Register</h1>
+    <div className="w-full mt-20 flex flex-col items-center">
+      <h1 className="text-2xl mt-5 mb-5">Register</h1>
 
-      <form id="signup-form" onSubmit={registerUser}>
+      <form className="flex flex-col w-2/5" onSubmit={registerUser}>
         <input
           type="text"
           placeholder="Enter Username"
-          className="signup-input"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-2.5"
         />
         <input
           type="password"
           placeholder="Enter Password"
-          className="signup-input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-2.5"
         />
-        <button id="signup-btn">Sign Up</button>
+
+        <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ">
+          Sign Up
+        </button>
       </form>
 
-      <Link to={``} id="login-link">
+      <Link to={``} className="mt-5 hover:underline">
         Already have an account ?
       </Link>
     </div>
