@@ -55,7 +55,7 @@ const SignUp = () => {
         </button>
       </form>
 
-      <Link to={``} className="mt-5 hover:underline">
+      <Link to={`/login`} className="mt-5 hover:underline">
         Already have an account ?
       </Link>
     </div>
