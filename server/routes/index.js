@@ -16,4 +16,7 @@ router.get("/", (_, res) => {
 // user routes
 router.use("/user", require("./user"));
 
+// article routes
+router.use("/article", require("./article"));
+
 module.exports = router;
