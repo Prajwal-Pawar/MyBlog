@@ -8,7 +8,7 @@ const JWT_SECRET_KEY = "5uYwxKODsw34UtYagIZNGDo2GqnPY0tC";
 module.exports.verifyToken = (req, res, next) => {
   try {
     // if token exists, get jwt token as bearer token from Authorization header otherwise null
-    const token = req.header.authorization?.split(" ")[1] || null;
+    const token = req.headers.authorization?.split(" ")[1] || null;
 
     // if token doesnt exists
     if (token == null) {
