@@ -2,16 +2,10 @@ import { useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+  // get token from localstorage
+  const storedToken = localStorage.getItem("token");
 
-  useEffect(() => {
-    // get token from localstorage
-    const storedToken = localStorage.getItem("token");
-
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
+  const [token, setToken] = useState(storedToken || null);
 
   // function to set the token and update local storage
   const setAuthToken = (newToken) => {

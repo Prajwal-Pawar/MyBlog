@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar";
+import PrivateRoute from "./PrivateRoute";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
-import PrivateRoute from "./PrivateRoute";
+import CreateArticle from "../pages/CreateArticle";
 
 function App() {
   return (
@@ -22,6 +23,15 @@ function App() {
         />
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/login" element={<Login />} />
+        <Route
+          exact
+          path="/create-article"
+          element={
+            <PrivateRoute>
+              <CreateArticle />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
@@ -9,15 +9,13 @@ const privateRoute = ({ children }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // if token doesnt exists, redirect to login
-    if (!token) {
-      return navigate("/login");
-    }
-  }, []);
-
   // if token exists, means user is logged in so render component
-  return children;
+  if (token) {
+    return children;
+  }
+
+  // if token doesnt exists, redirect to login
+  return navigate("/login");
 };
 
 export default privateRoute;
