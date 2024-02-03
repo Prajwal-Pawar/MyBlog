@@ -23,3 +23,7 @@ a {
   text-decoration: none;
   /* color: var(--primary-text); */
 }
+
+textarea {
+  resize: none;
+}
