@@ -16,7 +16,7 @@ const Navbar = () => {
         {token ? (
           <ul className="flex flex-row">
             <li className="mr-5">
-              <Link to={``}>create</Link>
+              <Link to={`/create-article`}>create</Link>
             </li>
             <li className="mr-5">
               <Link to={``}>profile</Link>
