@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import axios from "axios";
+import { Toaster, toast } from "react-hot-toast";
 import AuthContext from "../context/AuthContext";
 
 const CreateArticle = () => {
@@ -37,17 +38,25 @@ const CreateArticle = () => {
 
       console.log(response.data);
 
-      //
+      // showing message to user
+      toast.success(response.data.message);
+
+      // clearing input fields
       setTitle("");
       setDescription("");
       setContent("");
     } catch (err) {
       console.log(err.response.data);
+      // showing message to user
+      toast.error(err.response.data.message);
     }
   };
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
+      {/* for messages */}
+      <Toaster />
+
       <h1 className="text-2xl font-bold mt-5 mb-8">Create New Article</h1>
 
       <form className="flex flex-col w-3/5" onSubmit={createArticle}>
@@ -57,6 +66,7 @@ const CreateArticle = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-sky-500 mb-2.5"
+          required
         />
         <textarea
           placeholder="Description"
@@ -65,6 +75,7 @@ const CreateArticle = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-sky-500 mb-2.5"
+          required
         />
         <textarea
           placeholder="Type here ..."
@@ -73,6 +84,7 @@ const CreateArticle = () => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-sky-500 mb-2.5"
+          required
         />
         <button className="shadow bg-emerald-500 hover:bg-emerald-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-10">
           Publish
