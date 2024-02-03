@@ -2,7 +2,13 @@ const Article = require("../models/article");
 
 module.exports.create = async (req, res) => {
   try {
-    const article = new Article(req.body);
+    const article = new Article({
+      title: req.body.title,
+      description: req.body.description,
+      content: req.body.content,
+      user: req.userId,
+    });
+
     await article.save();
 
     return res.status(200).json({
