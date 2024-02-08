@@ -25,7 +25,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route
           exact
-          path="/create-article"
+          path="/article/create"
           element={
             <PrivateRoute>
               <CreateArticle />
