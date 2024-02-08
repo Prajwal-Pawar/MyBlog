@@ -25,7 +25,7 @@ module.exports.create = async (req, res) => {
 };
 
 // get all articles
-module.exports.getAllArticles = async (req, res) => {
+module.exports.fetchAllArticles = async (req, res) => {
   try {
     const articles = await Article.find({});
 

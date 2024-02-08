@@ -9,6 +9,6 @@ const { verifyToken } = require("../middlewares/auth");
 
 router.post("/create", verifyToken, articleController.create);
 
-router.get("/fetch-all", verifyToken, articleController.getAllArticles);
+router.get("/fetch-all", verifyToken, articleController.fetchAllArticles);
 
 module.exports = router;
