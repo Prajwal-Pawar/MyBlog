@@ -1,21 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 // private routes cant be accessed without login
-const privateRoute = ({ children }) => {
+const PrivateRoute = ({ children }) => {
   // get token from Auth Context
-  const { token } = useContext(AuthContext);
+  // const { token } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
 
-  // if token exists, means user is logged in so render component
-  if (token) {
-    return children;
-  }
+  useEffect(() => {
+    // if token doesnt exists, redirect to login
+    if (!token) {
+      return navigate("/login");
+    }
+  }, []);
 
-  // if token doesnt exists, redirect to login
-  return navigate("/login");
+  // if token exists, means user is logged in so render component
+  return children;
 };
 
-export default privateRoute;
+export default PrivateRoute;
