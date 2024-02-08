@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Navbar from "./Navbar";
 import PrivateRoute from "./PrivateRoute";
 import SignUp from "../pages/SignUp";
@@ -9,6 +10,9 @@ import CreateArticle from "../pages/CreateArticle";
 function App() {
   return (
     <div className="App">
+      {/* for messages to show on top of everythin */}
+      <Toaster />
+
       <Navbar />
 
       <Routes>

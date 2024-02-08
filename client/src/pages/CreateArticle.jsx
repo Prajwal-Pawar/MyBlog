@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const CreateArticle = () => {
   // hooks
@@ -59,9 +59,6 @@ const CreateArticle = () => {
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
-      {/* for messages */}
-      <Toaster />
-
       <h1 className="text-2xl font-bold mt-5 mb-8">Create New Article</h1>
 
       <form className="flex flex-col w-3/5" onSubmit={createArticle}>
