@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import AuthContext from "../context/AuthContext";
@@ -8,6 +9,8 @@ const CreateArticle = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
+
+  const navigate = useNavigate();
 
   // get token from Auth Context
   const { token } = useContext(AuthContext);
@@ -37,6 +40,9 @@ const CreateArticle = () => {
       );
 
       console.log(response.data);
+
+      // redirect to /
+      navigate("/");
 
       // showing message to user
       toast.success(response.data.message);
