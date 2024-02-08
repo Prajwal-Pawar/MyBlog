@@ -4,10 +4,11 @@ import AuthContext from "../context/AuthContext";
 
 const Navbar = () => {
   // get token from Auth Context
-  const { token } = useContext(AuthContext);
+  const { token, logout } = useContext(AuthContext);
 
   const [authToken, setAuthToken] = useState(token);
 
+  // using location to update navbar after auth
   const location = useLocation();
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const Navbar = () => {
               <Link to={``}>profile</Link>
             </li>
             <li className="mr-5">
-              <Link to={``}>logout</Link>
+              <Link onClick={logout}>logout</Link>
             </li>
           </ul>
         ) : (
