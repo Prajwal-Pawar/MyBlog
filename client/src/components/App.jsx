@@ -12,7 +12,15 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route
+          exact
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/login" element={<Login />} />
         <Route
@@ -24,6 +32,9 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        {/* for incorrect routes */}
+        <Route exact path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </div>
   );
