@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 
@@ -37,16 +38,24 @@ const Articles = () => {
   return (
     <div className="w-4/5 mt-8 flex flex-wrap m-auto">
       {articles.map((article, index) => (
-        <div className="w-full border mb-5 mr-4 p-5" key={`article-${index}`}>
-          <h1 className="text-2xl font-bold mb-1">{article.title}</h1>
-          <div className="flex justify-between">
-            <h3 className="text-base text-slate-600">{article.description}</h3>
-            <p className="text-base text-slate-600">
-              {dayjs(article.createdAt).format("DD MMM YYYY")}
-              {/* {dayjs(article.createdAt).format("DD MMMM YYYY")} */}
-            </p>
+        <Link
+          to="/article/:id"
+          className="w-full border mb-5 mr-4 p-5"
+          key={`article-${index}`}
+        >
+          <div>
+            <h1 className="text-2xl font-bold mb-1">{article.title}</h1>
+            <div className="flex justify-between">
+              <h3 className="text-base text-slate-600">
+                {article.description}
+              </h3>
+              <p className="text-base text-slate-600">
+                {dayjs(article.createdAt).format("DD MMM YYYY")}
+                {/* {dayjs(article.createdAt).format("DD MMMM YYYY")} */}
+              </p>
+            </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
