@@ -1,8 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-import AuthContext from "../context/AuthContext";
 
 const CreateArticle = () => {
   // hooks
@@ -12,8 +11,8 @@ const CreateArticle = () => {
 
   const navigate = useNavigate();
 
-  // get token from Auth Context
-  const { token } = useContext(AuthContext);
+  // get token from localstorage
+  const token = localStorage.getItem("token");
 
   // create article
   const createArticle = async (event) => {

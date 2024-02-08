@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
 
 // private routes cant be accessed without login
 const PrivateRoute = ({ children }) => {
-  // get token from Auth Context
-  // const { token } = useContext(AuthContext);
+  // get token from localstorage
   const token = localStorage.getItem("token");
 
   const [authToken, setAuthToken] = useState(token);

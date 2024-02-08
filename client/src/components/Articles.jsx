@@ -1,13 +1,11 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
-import AuthContext from "../context/AuthContext";
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
 
-  // get token from Auth Context
-  // const { token } = useContext(AuthContext);
+  // get token from localstorage
   const token = localStorage.getItem("token");
 
   // get all articles
