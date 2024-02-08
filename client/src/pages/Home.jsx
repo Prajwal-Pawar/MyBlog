@@ -1,7 +1,9 @@
+import Articles from "../components/Articles";
+
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="w-full">
+      <Articles />
     </div>
   );
 };
