@@ -47,7 +47,7 @@ module.exports.login = async (req, res) => {
     // if user doesnt exists
     if (!user) {
       return res.status(400).json({
-        message: "User doesnt exist",
+        message: "User doesn't exist",
       });
     }
 
@@ -66,6 +66,30 @@ module.exports.login = async (req, res) => {
     return res.status(200).json({
       message: "User logged in successfully",
       token,
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+// profile
+module.exports.profile = async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+
+    // if user doesnt exists
+    if (!user) {
+      return res.status(400).json({
+        message: "User doesn't exist",
+      });
+    }
+
+    return res.status(200).json({
+      user,
     });
   } catch (err) {
     console.log(err);
