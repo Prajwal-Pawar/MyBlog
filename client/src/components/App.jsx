@@ -6,6 +6,7 @@ import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
 import CreateArticle from "../pages/CreateArticle";
+import Article from "../pages/Article";
 
 function App() {
   return (
@@ -27,12 +28,23 @@ function App() {
         />
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/login" element={<Login />} />
+
         <Route
           exact
           path="/article/create"
           element={
             <PrivateRoute>
               <CreateArticle />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          exact
+          path="/article/:id"
+          element={
+            <PrivateRoute>
+              <Article />
             </PrivateRoute>
           }
         />
