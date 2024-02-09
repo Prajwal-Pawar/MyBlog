@@ -40,3 +40,25 @@ module.exports.fetchAllArticles = async (req, res) => {
     });
   }
 };
+
+// get specific article by Id
+module.exports.getArticleById = async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id)
+      // populate all user information
+      // .populate("user")
+      // populate only users username
+      .populate("user", "username")
+      .exec();
+
+    return res.status(200).json({
+      article,
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};

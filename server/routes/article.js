@@ -11,4 +11,6 @@ router.post("/create", verifyToken, articleController.create);
 
 router.get("/fetch-all", verifyToken, articleController.fetchAllArticles);
 
+router.get("/:id", verifyToken, articleController.getArticleById);
+
 module.exports = router;
