@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import CreateArticle from "../pages/CreateArticle";
 import Article from "../pages/Article";
+import Profile from "../pages/Profile";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
       <Navbar />
 
       <Routes>
+        <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path="/login" element={<Login />} />
+
         <Route
           exact
           path="/"
@@ -26,8 +30,6 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route exact path="/signup" element={<SignUp />} />
-        <Route exact path="/login" element={<Login />} />
 
         <Route
           exact
@@ -49,6 +51,15 @@ function App() {
           }
         />
 
+        <Route
+          exact
+          path="/user/profile/:id"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
         {/* for incorrect routes */}
         <Route exact path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
