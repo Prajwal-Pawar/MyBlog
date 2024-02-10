@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
+import { jwtDecode } from "jwt-decode";
 
 const Profile = () => {
   const [user, setUser] = useState({});
@@ -31,12 +32,14 @@ const Profile = () => {
     }
   };
 
-  // getting article id from URL parameters
-  const { id } = useParams();
-
   useEffect(() => {
-    getUser(id);
-  }, []);
+    if (token) {
+      // decode user id from jwt token
+      const decoded = jwtDecode(token);
+
+      getUser(decoded.userId);
+    }
+  }, [token]);
 
   return (
     <div className="w-4/5 flex flex-col m-auto items-center mt-10">
