@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const Article = require("../models/article");
 
 const JWT_SECRET_KEY = "5uYwxKODsw34UtYagIZNGDo2GqnPY0tC";
 
@@ -96,6 +97,24 @@ module.exports.profile = async (req, res) => {
 
     return res.status(500).json({
       message: "Internal server error",
+    });
+  }
+};
+
+// get user articles
+module.exports.userArticles = async (req, res) => {
+  try {
+    // find article by current user which is in req
+    let articles = await Article.find({ user: req.userId });
+
+    return res.status(200).json({
+      articles,
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      message: "Error fetching articles",
     });
   }
 };
