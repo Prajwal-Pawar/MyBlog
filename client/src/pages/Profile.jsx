@@ -49,16 +49,20 @@ const Profile = () => {
         Created MyBlog account on {dayjs(user.createdAt).format("DD MMM YYYY")}
       </p>
 
-      <div className="w-full flex flex-row justify-evenly mt-4">
-        <Link className="border p-5 w-1/3 text-center mr-4  shadow bg-teal-500 hover:bg-teal-600 focus:shadow-outline focus:outline-none text-white font-bold rounded">
+      <div className="w-full flex flex-col justify-center items-center mt-4">
+        <Link className="w-1/3 text-center shadow bg-emerald-500 hover:bg-emerald-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-5">
+          <p>Your articles</p>
+        </Link>
+
+        <Link className="w-1/3 text-center shadow bg-teal-500 hover:bg-teal-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-5">
           <p>Change Your Password</p>
         </Link>
 
-        <Link className="border p-5 w-1/3 text-center mr-4 shadow bg-stone-500 hover:bg-stone-600 focus:shadow-outline focus:outline-none text-white font-bold rounded">
+        <Link className="w-1/3 text-center shadow bg-stone-500 hover:bg-stone-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-5">
           <p>Logout</p>
         </Link>
 
-        <Link className="border p-5 w-1/3 text-center shadow bg-red-500 hover:bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold rounded">
+        <Link className="w-1/3 text-center shadow bg-red-500 hover:bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-5">
           <p>Delete Your Account</p>
         </Link>
       </div>
