@@ -13,6 +13,6 @@ router.post("/login", userController.login);
 
 router.get("/profile/:id", verifyToken, userController.profile);
 
-router.get("/articles", userController.userArticles);
+router.get("/articles", verifyToken, userController.userArticles);
 
 module.exports = router;
