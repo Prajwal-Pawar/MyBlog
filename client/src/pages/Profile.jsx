@@ -50,7 +50,10 @@ const Profile = () => {
       </p>
 
       <div className="w-full flex flex-col justify-center items-center mt-4">
-        <Link className="w-1/3 text-center shadow bg-emerald-500 hover:bg-emerald-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-5">
+        <Link
+          to="/user/articles/"
+          className="w-1/3 text-center shadow bg-emerald-500 hover:bg-emerald-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-5"
+        >
           <p>Your articles</p>
         </Link>
 

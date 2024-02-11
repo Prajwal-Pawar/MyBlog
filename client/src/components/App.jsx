@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import CreateArticle from "../pages/CreateArticle";
 import Article from "../pages/Article";
 import Profile from "../pages/Profile";
+import UserArticles from "../pages/UserArticles";
 
 function App() {
   return (
@@ -60,6 +61,17 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        <Route
+          exact
+          path="/user/articles/"
+          element={
+            <PrivateRoute>
+              <UserArticles />
+            </PrivateRoute>
+          }
+        />
+
         {/* for incorrect routes */}
         <Route exact path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
