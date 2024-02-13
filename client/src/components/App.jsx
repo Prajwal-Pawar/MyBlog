@@ -9,6 +9,7 @@ import CreateArticle from "../pages/CreateArticle";
 import Article from "../pages/Article";
 import Profile from "../pages/Profile";
 import UserArticles from "../pages/UserArticles";
+import PageNotFound from "./PageNotFound";
 
 function App() {
   return (
@@ -73,7 +74,7 @@ function App() {
         />
 
         {/* for incorrect routes */}
-        <Route exact path="*" element={<h1>404 Not Found</h1>} />
+        <Route exact path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );
