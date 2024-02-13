@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 // private routes cant be accessed without login
 const PrivateRoute = ({ children }) => {
@@ -16,8 +17,13 @@ const PrivateRoute = ({ children }) => {
   useEffect(() => {
     setAuthToken(localStorage.getItem("token"));
 
-    // if token doesnt exists, redirect to login
-    if (!authToken) {
+    // if authToken exists, decode jwt token, else null
+    const decoded = authToken ? jwtDecode(token) : null;
+    // if current time is bigger than jwt expiration time, then token is expired
+    const isTokenExpired = decoded ? Date.now() >= decoded.exp * 1000 : null;
+
+    // if token doesn't exist or token is expired, redirect to login
+    if (!authToken || isTokenExpired) {
       return navigate("/login");
     }
   }, [location, authToken]);
