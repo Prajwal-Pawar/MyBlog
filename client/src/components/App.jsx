@@ -45,7 +45,7 @@ function App() {
 
         <Route
           exact
-          path="/article/:id"
+          path="/article/:slug"
           element={
             <PrivateRoute>
               <Article />

@@ -10,10 +10,10 @@ const Article = () => {
   const token = localStorage.getItem("token");
 
   // get article by id
-  const getArticleById = async (articleId) => {
+  const getArticleById = async (slug) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/article/${articleId}`,
+        `http://localhost:8000/article/${slug}`,
         {
           headers: {
             // sending authorization header to send JWT as bearer token to authorize request
@@ -31,10 +31,10 @@ const Article = () => {
   };
 
   // getting article id from URL parameters
-  const { id } = useParams();
+  const { slug } = useParams();
 
   useEffect(() => {
-    getArticleById(id);
+    getArticleById(slug);
   }, []);
 
   return (

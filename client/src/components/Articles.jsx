@@ -39,7 +39,7 @@ const Articles = () => {
     <div className="w-4/5 mt-8 flex flex-wrap m-auto">
       {articles.map((article, index) => (
         <Link
-          to={`/article/${article._id}`}
+          to={`/article/${article.slug}`}
           className="w-full border mb-5 mr-4 p-5"
           key={`article-${index}`}
         >
