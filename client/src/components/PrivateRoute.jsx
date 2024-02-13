@@ -18,7 +18,7 @@ const PrivateRoute = ({ children }) => {
     setAuthToken(localStorage.getItem("token"));
 
     // if authToken exists, decode jwt token, else null
-    const decoded = authToken ? jwtDecode(token) : null;
+    const decoded = authToken ? jwtDecode(authToken) : null;
     // if current time is bigger than jwt expiration time, then token is expired
     const isTokenExpired = decoded ? Date.now() >= decoded.exp * 1000 : null;
 
