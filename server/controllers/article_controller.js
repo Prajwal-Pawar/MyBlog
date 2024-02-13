@@ -25,9 +25,11 @@ module.exports.create = async (req, res) => {
 };
 
 // get all articles
-module.exports.fetchAllArticles = async (req, res) => {
+module.exports.fetchAllArticles = async (_, res) => {
   try {
-    const articles = await Article.find({});
+    const articles = await Article.find({}).sort({
+      createdAt: "desc",
+    });
 
     return res.status(200).json({
       articles,
