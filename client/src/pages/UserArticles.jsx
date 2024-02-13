@@ -34,9 +34,14 @@ const UserArticles = () => {
 
   return (
     <div className="w-4/5 mt-8 flex flex-wrap m-auto">
+      <h1 className="text-lg mb-4 m-auto">
+        You published <span className="font-bold">{userArticles.length}</span>{" "}
+        articles till now.
+      </h1>
+
       {userArticles.map((article, index) => (
         <Link
-          to={`/article/${article._id}`}
+          to={`/article/${article.slug}`}
           className="w-full border mb-5 mr-4 p-5"
           key={`article-${index}`}
         >
