@@ -118,3 +118,24 @@ module.exports.userArticles = async (req, res) => {
     });
   }
 };
+
+// delete user
+module.exports.delete = async (req, res) => {
+  try {
+    // find user by user id which is in req
+    await User.findByIdAndDelete(req.userId);
+
+    // deleting articles that user published
+    await Article.deleteMany({ user: req.userId });
+
+    return res.status(200).json({
+      message: "User deleted",
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      message: "Error fetching articles",
+    });
+  }
+};
