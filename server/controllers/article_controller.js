@@ -43,10 +43,10 @@ module.exports.fetchAllArticles = async (_, res) => {
   }
 };
 
-// get specific article by Id
-module.exports.getArticleById = async (req, res) => {
+// get specific article by article slug
+module.exports.getArticleBySlug = async (req, res) => {
   try {
-    const article = await Article.findById(req.params.id)
+    const article = await Article.findOne({ slug: req.params.slug })
       // populate all user information
       // .populate("user")
       // populate only users username
