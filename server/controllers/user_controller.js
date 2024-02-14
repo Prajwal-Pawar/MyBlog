@@ -104,7 +104,7 @@ module.exports.profile = async (req, res) => {
 // get user articles
 module.exports.userArticles = async (req, res) => {
   try {
-    // find article by current user which is in req
+    // find article by current user which is in req body
     let articles = await Article.find({ user: req.userId });
 
     return res.status(200).json({
@@ -119,10 +119,39 @@ module.exports.userArticles = async (req, res) => {
   }
 };
 
+// change user password
+module.exports.changePassword = async (req, res) => {
+  try {
+    // find user by user id which is in req body
+    let user = await User.findById(req.userId);
+
+    // if user inputted password and user current password in db doesnt match
+    if (!bcrypt.compareSync(req.body.oldPassword, user.password)) {
+      return res.status(400).json({
+        message: "Please enter correct old password",
+      });
+    }
+
+    // change user password
+    user.password = req.body.newPassword;
+    await user.save();
+
+    return res.status(200).json({
+      message: "Password changed successfully",
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      message: "Error changing password",
+    });
+  }
+};
+
 // delete user
 module.exports.delete = async (req, res) => {
   try {
-    // find user by user id which is in req
+    // find user by user id which is in req body
     await User.findByIdAndDelete(req.userId);
 
     // deleting articles that user published
@@ -135,7 +164,7 @@ module.exports.delete = async (req, res) => {
     console.log(err);
 
     return res.status(500).json({
-      message: "Error fetching articles",
+      message: "Internal server error",
     });
   }
 };

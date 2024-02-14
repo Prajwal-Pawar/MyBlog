@@ -15,6 +15,8 @@ router.get("/profile/:id", verifyToken, userController.profile);
 
 router.get("/articles", verifyToken, userController.userArticles);
 
+router.put("/change-password", verifyToken, userController.changePassword);
+
 router.delete("/delete", verifyToken, userController.delete);
 
 module.exports = router;
