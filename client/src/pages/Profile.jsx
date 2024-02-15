@@ -95,7 +95,10 @@ const Profile = () => {
           <p>Your articles</p>
         </Link>
 
-        <Link className="w-1/3 text-center shadow bg-teal-500 hover:bg-teal-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-5">
+        <Link
+          to="/user/change-password"
+          className="w-1/3 text-center shadow bg-teal-500 hover:bg-teal-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-5"
+        >
           <p>Change Your Password</p>
         </Link>
 

@@ -10,6 +10,7 @@ import Article from "../pages/Article";
 import Profile from "../pages/Profile";
 import UserArticles from "../pages/UserArticles";
 import PageNotFound from "./PageNotFound";
+import ChangePassword from "../pages/ChangePassword";
 
 function App() {
   return (
@@ -69,6 +70,16 @@ function App() {
           element={
             <PrivateRoute>
               <UserArticles />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          exact
+          path="/user/change-password"
+          element={
+            <PrivateRoute>
+              <ChangePassword />
             </PrivateRoute>
           }
         />
