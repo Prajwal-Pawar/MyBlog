@@ -132,8 +132,11 @@ module.exports.changePassword = async (req, res) => {
       });
     }
 
+    // hash new password before changing it in DB
+    const hashedNewPassword = bcrypt.hashSync(req.body.newPassword, 10);
+
     // change user password
-    user.password = req.body.newPassword;
+    user.password = hashedNewPassword;
     await user.save();
 
     return res.status(200).json({
