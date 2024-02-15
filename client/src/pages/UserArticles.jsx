@@ -48,10 +48,12 @@ const UserArticles = () => {
           >
             <div className="border p-4 rounded-md">
               <Link to={`/article/${article.slug}`}>
-                <h2 className="text-lg font-semibold mb-2">{article.title}</h2>
+                <h2 className="text-lg font-semibold mb-2 overflow-hidden overflow-ellipsis">
+                  {article.title}
+                </h2>
               </Link>
 
-              <p className="text-sm text-slate-600 mb-2">
+              <p className="text-sm text-slate-600 mb-2 overflow-hidden overflow-ellipsis">
                 {article.description}
               </p>
 

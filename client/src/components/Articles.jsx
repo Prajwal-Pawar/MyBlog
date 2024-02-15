@@ -36,27 +36,34 @@ const Articles = () => {
   }, []);
 
   return (
-    <div className="w-4/5 mt-8 flex flex-wrap m-auto">
-      {articles.map((article, index) => (
-        <Link
-          to={`/article/${article.slug}`}
-          className="w-full border mb-5 mr-4 p-5"
-          key={`article-${index}`}
-        >
-          <div>
-            <h1 className="text-2xl font-bold mb-1">{article.title}</h1>
-            <div className="flex justify-between">
-              <h3 className="text-base text-slate-600">
+    <div className="container w-4/5 px-4 py-8 mx-auto">
+      <h1 className="text-2xl font-bold text-center mb-8">Latest Articles</h1>
+
+      <div className="flex flex-wrap justify-center -mx-4">
+        {articles.map((article, index) => (
+          <Link
+            to={`/article/${article.slug}`}
+            className="w-full sm:w-1/2 lg:w-1/3 px-4 mb-8"
+            key={`article-${index}`}
+          >
+            <div className="border border-gray-200 rounded-lg p-6 transition duration-300 hover:shadow-md">
+              <h1 className="text-xl font-bold mb-2 overflow-hidden overflow-ellipsis">
+                {article.title}
+              </h1>
+              <h3 className="text-base text-slate-600 mb-4 overflow-hidden overflow-ellipsis">
                 {article.description}
               </h3>
-              <p className="text-base text-slate-600">
-                {dayjs(article.createdAt).format("DD MMM YYYY")}
-                {/* {dayjs(article.createdAt).format("DD MMMM YYYY")} */}
-              </p>
+
+              <div className="flex items-center justify-between">
+                <p className="text-base text-slate-600">
+                  {dayjs(article.createdAt).format("DD MMM YYYY")}
+                  {/* {dayjs(article.createdAt).format("DD MMMM YYYY")} */}
+                </p>
+              </div>
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
