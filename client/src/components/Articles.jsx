@@ -43,7 +43,7 @@ const Articles = () => {
         {articles.map((article, index) => (
           <Link
             to={`/article/${article.slug}`}
-            className="w-full sm:w-1/2 lg:w-1/3 px-4 mb-8"
+            className="w-full sm:w-1/2 lg:w-1/2 px-4 mb-8"
             key={`article-${index}`}
           >
             <div className="border border-gray-200 rounded-lg p-6 transition duration-300 hover:shadow-md">

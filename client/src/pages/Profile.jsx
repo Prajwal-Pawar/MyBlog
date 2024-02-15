@@ -84,7 +84,7 @@ const Profile = () => {
       <h1 className="text-2xl font-bold mb-5">@{user.username}</h1>
 
       <p className="text-slate-500 mb-5">
-        Created MyBlog account on {dayjs(user.createdAt).format("DD MMM YYYY")}
+        Joined MyBlog on {dayjs(user.createdAt).format("DD MMM YYYY")}
       </p>
 
       <div className="w-full flex flex-col justify-center items-center mt-4">

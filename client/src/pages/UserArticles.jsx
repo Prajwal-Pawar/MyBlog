@@ -44,7 +44,7 @@ const UserArticles = () => {
         {userArticles.map((article, index) => (
           <div
             key={`article-${index}`}
-            className="w-full md:w-1/2 lg:w-1/3 px-4 mb-4"
+            className="w-full md:w-1/2 lg:w-1/2 px-4 mb-4"
           >
             <div className="border p-4 rounded-md">
               <Link to={`/article/${article.slug}`}>
