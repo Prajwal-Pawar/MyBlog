@@ -11,6 +11,7 @@ import Profile from "../pages/Profile";
 import UserArticles from "../pages/UserArticles";
 import PageNotFound from "./PageNotFound";
 import ChangePassword from "../pages/ChangePassword";
+import EditArticle from "../pages/EditArticle";
 
 function App() {
   return (
@@ -50,6 +51,16 @@ function App() {
           element={
             <PrivateRoute>
               <Article />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          exact
+          path="/article/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditArticle />
             </PrivateRoute>
           }
         />
