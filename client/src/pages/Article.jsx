@@ -3,11 +3,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 import { toast } from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
+import { MdDelete } from "react-icons/md";
 
 const Article = () => {
   const [article, setArticle] = useState({});
   const [comment, setComment] = useState("");
   const [articleComments, setArticleComments] = useState([]);
+  const [userId, setUserId] = useState(null);
 
   // get token from localstorage
   const token = localStorage.getItem("token");
@@ -40,6 +43,15 @@ const Article = () => {
   useEffect(() => {
     getArticleById(slug);
   }, [slug]);
+
+  useEffect(() => {
+    if (token) {
+      // decode user id from jwt token
+      const decoded = jwtDecode(token);
+
+      setUserId(decoded.userId);
+    }
+  }, [token]);
 
   // create comment
   const addComment = async (articleId) => {
@@ -78,6 +90,35 @@ const Article = () => {
     }
   };
 
+  // delete comment
+  const deleteComment = async (commentId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/comment/delete/${commentId}`,
+        {
+          headers: {
+            // sending authorization header to send JWT as bearer token to authorize request
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      // showing message to user
+      toast.success(response.data.message);
+
+      // remove the deleted comments from articleComments state
+      setArticleComments(
+        articleComments.filter((comment) => comment._id !== commentId)
+      );
+    } catch (err) {
+      console.log(err);
+      // showing message to user
+      toast.error(err.response.data.message);
+    }
+  };
+
   return (
     <div className="container w-4/5 mx-auto px-4 py-8">
       <div className="w-full mx-auto">
@@ -97,11 +138,30 @@ const Article = () => {
           {articleComments.length > 0 ? (
             <ul>
               {articleComments.map((articleComment, index) => (
-                <li key={`comment-${index}`} className="mb-4">
-                  <p className="font-semibold">
-                    {articleComment.user?.username}
-                  </p>
-                  <p>{articleComment.content}</p>
+                <li
+                  key={`comment-${index}`}
+                  className="mb-4 p-4 border border-slate-200 rounded-lg"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="font-semibold text-blue-800">
+                        {articleComment.user?.username}
+                      </p>
+                      <p className="text-gray-600">{articleComment.content}</p>
+                    </div>
+
+                    {/* if current userId and user id in comment matches 
+                    then show delete button */}
+                    {userId == articleComment.user._id ? (
+                      <button
+                        onClick={() => deleteComment(articleComment._id)}
+                        className="mr-2 py-1 px-2 font-semibold rounded shadow bg-red-600 hover:bg-red-500 text-white focus:shadow-outline focus:outline-none"
+                      >
+                        {/* icon */}
+                        <MdDelete className="inline-block" size={20} />
+                      </button>
+                    ) : null}
+                  </div>
                 </li>
               ))}
             </ul>
