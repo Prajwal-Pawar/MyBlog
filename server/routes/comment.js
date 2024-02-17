@@ -9,4 +9,6 @@ const { verifyToken } = require("../middlewares/auth");
 
 router.post("/create", verifyToken, commentController.create);
 
+router.delete("/delete/:id", verifyToken, commentController.delete);
+
 module.exports = router;
