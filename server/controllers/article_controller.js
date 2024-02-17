@@ -94,7 +94,7 @@ module.exports.edit = async (req, res) => {
 
     // check if user is authorized to edit article
     // if user id in article and user id in req body from decoding jwt matches then user is authorized otherwise user is not authorized
-    if (article.user == !req.userId) {
+    if (article.user != req.userId) {
       return res.status(401).json({
         message: "You are not authorize to update the article",
       });
@@ -110,6 +110,33 @@ module.exports.edit = async (req, res) => {
 
     return res.status(200).json({
       message: "Article updated",
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      message: "Error updating article",
+    });
+  }
+};
+
+// delete article
+module.exports.delete = async (req, res) => {
+  try {
+    let article = await Article.findById(req.params.id);
+
+    // check if user is authorized to delete article
+    // if user id in article and user id in req body from decoding jwt matches then user is authorized otherwise user is not authorized
+    if (article.user != req.userId) {
+      return res.status(401).json({
+        message: "You are not authorize to delete the article",
+      });
+    }
+
+    await article.deleteOne();
+
+    return res.status(200).json({
+      message: "Article deleted",
     });
   } catch (err) {
     console.log(err);

@@ -17,4 +17,6 @@ router.get("/:slug", verifyToken, articleController.getArticleBySlug);
 
 router.put("/edit/:id", verifyToken, articleController.edit);
 
+router.delete("/delete/:id", verifyToken, articleController.delete);
+
 module.exports = router;
