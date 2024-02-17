@@ -27,6 +27,13 @@ const articleSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    // array of id's of all comments in article
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   {
     timestamps: true,
