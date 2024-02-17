@@ -34,7 +34,7 @@ const UserArticles = () => {
 
   useEffect(() => {
     fetchUserArticles();
-  }, [userArticles]);
+  }, []);
 
   // delete article
   const deleteArticle = async (articleId) => {
@@ -48,6 +48,11 @@ const UserArticles = () => {
             Authorization: `Bearer ${token}`,
           },
         }
+      );
+
+      // Remove the deleted article from userArticles state
+      setUserArticles(
+        userArticles.filter((article) => article._id !== articleId)
       );
 
       // redirect to user articles page
