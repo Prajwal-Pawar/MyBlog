@@ -73,6 +73,15 @@ module.exports.getArticleBySlug = async (req, res) => {
       // .populate("user")
       // populate only users username
       .populate("user", "username")
+      // populate all comment information
+      .populate({
+        // populating comments
+        path: "comments",
+        // populating user from comments
+        populate: {
+          path: "user",
+        },
+      })
       .exec();
 
     return res.status(200).json({

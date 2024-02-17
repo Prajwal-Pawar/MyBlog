@@ -19,4 +19,7 @@ router.use("/user", require("./user"));
 // article routes
 router.use("/article", require("./article"));
 
+// comment routes
+router.use("/comment", require("./comment"));
+
 module.exports = router;
