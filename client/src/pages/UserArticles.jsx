@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
+import { toast } from "react-hot-toast";
 import { MdDelete, MdEdit } from "react-icons/md";
 
 const UserArticles = () => {
   const [userArticles, setUserArticles] = useState([]);
+
+  const navigate = useNavigate();
 
   // get token from localstorage
   const token = localStorage.getItem("token");
@@ -31,7 +34,33 @@ const UserArticles = () => {
 
   useEffect(() => {
     fetchUserArticles();
-  }, []);
+  }, [userArticles]);
+
+  // delete article
+  const deleteArticle = async (articleId) => {
+    try {
+      // getting response from server for delete article API
+      const response = await axios.delete(
+        `http://localhost:8000/article//delete/${articleId}`,
+        {
+          headers: {
+            // sending authorization header to send JWT as bearer token to authorize request
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // redirect to user articles page
+      navigate("/user/articles/");
+
+      // showing message to user
+      toast.success(response.data.message);
+    } catch (err) {
+      console.log(err);
+      // showing message to user
+      toast.error(err.response.data.message);
+    }
+  };
 
   return (
     <div className="container w-4/5 mt-8 mx-auto">
@@ -71,7 +100,10 @@ const UserArticles = () => {
                     </button>
                   </Link>
                   <Link>
-                    <button className="mr-2 py-1 px-2 font-semibold rounded shadow bg-red-600 hover:bg-red-500 text-white focus:shadow-outline focus:outline-none">
+                    <button
+                      onClick={() => deleteArticle(article._id)}
+                      className="mr-2 py-1 px-2 font-semibold rounded shadow bg-red-600 hover:bg-red-500 text-white focus:shadow-outline focus:outline-none"
+                    >
                       {/* icon */}
                       <MdDelete className="inline-block mr-1" size={20} />
                       Delete
