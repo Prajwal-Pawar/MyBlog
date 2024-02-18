@@ -27,6 +27,11 @@ const articleSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    views: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     // array of id's of all comments in article
     comments: [
       {

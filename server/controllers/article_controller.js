@@ -84,6 +84,10 @@ module.exports.getArticleBySlug = async (req, res) => {
       })
       .exec();
 
+    // increase view count when user clicks on article
+    article.views++;
+    await article.save();
+
     return res.status(200).json({
       article,
     });
