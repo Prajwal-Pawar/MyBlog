@@ -16,7 +16,7 @@ const Article = () => {
   const token = localStorage.getItem("token");
 
   // get article by id
-  const getArticleById = async (slug) => {
+  const getArticleBySlug = async (slug) => {
     try {
       const response = await axios.get(
         `http://localhost:8000/article/${slug}`,
@@ -41,7 +41,7 @@ const Article = () => {
   const { slug } = useParams();
 
   useEffect(() => {
-    getArticleById(slug);
+    getArticleBySlug(slug);
   }, [slug]);
 
   useEffect(() => {
@@ -125,7 +125,8 @@ const Article = () => {
         <h1 className="text-2xl font-bold mb-2">{article.title}</h1>
         <h3 className="text-slate-500 mb-8">
           {article.user?.username} /{" "}
-          {dayjs(article.createdAt).format("DD MMM YYYY")}
+          {dayjs(article.createdAt).format("DD MMM YYYY")} / Views :{" "}
+          {article.views}
         </h3>
 
         <p className="mb-8 text-base text-left">{article.content}</p>

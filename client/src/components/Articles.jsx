@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
@@ -59,6 +60,14 @@ const Articles = () => {
                   {dayjs(article.createdAt).format("DD MMM YYYY")}
                   {/* {dayjs(article.createdAt).format("DD MMMM YYYY")} */}
                 </p>
+
+                <div className="flex flex-row justify-center items-center">
+                  <MdOutlineRemoveRedEye
+                    size={22}
+                    className="mr-2 text-slate-600"
+                  />
+                  <p className="text-slate-600">{article.views}</p>
+                </div>
               </div>
             </div>
           </Link>
