@@ -4,7 +4,13 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { toast } from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
-import { MdDelete } from "react-icons/md";
+import {
+  MdDelete,
+  MdOutlineDateRange,
+  MdOutlineRemoveRedEye,
+} from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
+import formatNumber from "../utils/formatNumber";
 
 const Article = () => {
   const [article, setArticle] = useState({});
@@ -123,10 +129,15 @@ const Article = () => {
     <div className="container w-4/5 mx-auto px-4 py-8">
       <div className="w-full mx-auto">
         <h1 className="text-2xl font-bold mb-2">{article.title}</h1>
-        <h3 className="text-slate-500 mb-8">
-          {article.user?.username} /{" "}
-          {dayjs(article.createdAt).format("DD MMM YYYY")} / Views :{" "}
-          {article.views}
+        <h3 className="flex align-center text-slate-500 mb-8 mt-3">
+          <FaRegUser size={20} className="mr-2" />
+          <p className="mr-5">{article.user?.username}</p>
+          <MdOutlineDateRange size={22} className="mr-2" />
+          <p className="mr-5">
+            {dayjs(article.createdAt).format("DD MMM YYYY")}
+          </p>
+          <MdOutlineRemoveRedEye size={22} className="mr-2" />
+          <p className="mr-5">{formatNumber(article.views)}</p>
         </h3>
 
         <p className="mb-8 text-base text-left">{article.content}</p>

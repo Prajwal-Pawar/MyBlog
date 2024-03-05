@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import formatNumber from "../utils/formatNumber";
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
@@ -66,7 +67,9 @@ const Articles = () => {
                     size={22}
                     className="mr-2 text-slate-600"
                   />
-                  <p className="text-slate-600">{article.views}</p>
+                  <p className="text-slate-600">
+                    {formatNumber(article.views)}
+                  </p>
                 </div>
               </div>
             </div>
