@@ -11,6 +11,10 @@ router.post("/signup", userController.signUp);
 
 router.post("/login", userController.login);
 
+router.get("/refetch", userController.refetch);
+
+router.get("/logout", userController.logout);
+
 router.get("/profile/:id", verifyToken, userController.profile);
 
 router.get("/articles", verifyToken, userController.userArticles);
