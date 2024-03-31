@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Article = require("../models/article");
+const Comment = require("../models/comment");
 
 const JWT_SECRET_KEY = "5uYwxKODsw34UtYagIZNGDo2GqnPY0tC";
 
@@ -45,7 +46,7 @@ module.exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
 
-    // if user doesnt exists
+    // if user doesn't exists
     if (!user) {
       return res.status(400).json({
         message: "User doesn't exist",
@@ -54,20 +55,80 @@ module.exports.login = async (req, res) => {
 
     // checking if inputted password and password in db matches
     if (!bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(400).json({
+      return res.status(401).json({
         message: "Incorrect password",
       });
     }
 
     // generating jwt token to authorize user after login
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET_KEY, {
-      expiresIn: "1h",
+    const token = jwt.sign(
+      { _id: user._id, username: user.username },
+      JWT_SECRET_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    /* destructure all userinfo and password separately to send user info
+    to client without password */
+    const { password, ...userInfo } = user._doc;
+
+    // generate httpOnly, secure and sameSite cookie and response
+    return res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .status(200)
+      .json({
+        message: "User logged in successfully",
+        user: userInfo,
+      });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      message: "Internal server error",
     });
+  }
+};
+
+// re-fetch user
+module.exports.refetch = async (req, res) => {
+  try {
+    // get token from cookies
+    const token = req.cookies.token;
+
+    // verify jwt token
+    const decodedToken = jwt.verify(token, JWT_SECRET_KEY);
 
     return res.status(200).json({
-      message: "User logged in successfully",
-      token,
+      decodedToken,
     });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+// logout
+module.exports.logout = async (req, res) => {
+  try {
+    // clear cookie
+    return res
+      .clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .status(200)
+      .json({
+        message: "User logged out",
+      });
   } catch (err) {
     console.log(err);
 
@@ -82,7 +143,7 @@ module.exports.profile = async (req, res) => {
   try {
     let user = await User.findById(req.params.id);
 
-    // if user doesnt exists
+    // if user doesn't exists
     if (!user) {
       return res.status(400).json({
         message: "User doesn't exist",
@@ -159,6 +220,9 @@ module.exports.delete = async (req, res) => {
 
     // deleting articles that user published
     await Article.deleteMany({ user: req.userId });
+
+    // deleting comments that user posted
+    await Comment.deleteMany({ user: req.userId });
 
     return res.status(200).json({
       message: "User deleted",
