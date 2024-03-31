@@ -1,4 +1,5 @@
 const Article = require("../models/article");
+const Comment = require("../models/comment");
 
 // create article
 module.exports.create = async (req, res) => {
@@ -27,9 +28,11 @@ module.exports.create = async (req, res) => {
 // get all articles
 module.exports.fetchAllArticles = async (_, res) => {
   try {
-    const articles = await Article.find({}).sort({
-      createdAt: "desc",
-    });
+    const articles = await Article.find({})
+      .sort({
+        createdAt: "desc",
+      })
+      .populate("user", "username");
 
     return res.status(200).json({
       articles,
@@ -146,7 +149,11 @@ module.exports.delete = async (req, res) => {
       });
     }
 
+    // delete article
     await article.deleteOne();
+
+    // delete comments on that article
+    await Comment.deleteMany({ article: req.params.id });
 
     return res.status(200).json({
       message: "Article deleted",
