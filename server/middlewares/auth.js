@@ -7,12 +7,12 @@ const JWT_SECRET_KEY = "5uYwxKODsw34UtYagIZNGDo2GqnPY0tC";
 
 module.exports.verifyToken = (req, res, next) => {
   try {
-    // if token exists, get jwt token as bearer token from Authorization header otherwise null
-    const token = req.headers.authorization?.split(" ")[1] || null;
+    // if token exists, get jwt token from cookie otherwise null
+    const token = req.cookies.token || null;
 
-    // if token doesnt exists
+    // if token doesn't exists
     if (token == null) {
-      return res.status(400).json({
+      return res.status(401).json({
         message: "Invalid token",
       });
     }
@@ -21,7 +21,7 @@ module.exports.verifyToken = (req, res, next) => {
     const decodedToken = jwt.verify(token, JWT_SECRET_KEY);
 
     // set user in req object to use in further routes and authorize user
-    req.userId = decodedToken.userId;
+    req.userId = decodedToken._id;
 
     next();
   } catch (err) {
