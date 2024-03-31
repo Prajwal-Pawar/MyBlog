@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import Editor from "../components/Editor";
 
 const EditArticle = () => {
   // hooks
@@ -14,19 +15,13 @@ const EditArticle = () => {
 
   const navigate = useNavigate();
 
-  // get token from localstorage
-  const token = localStorage.getItem("token");
-
   // get article by id
   const getArticleById = async (articleId) => {
     try {
       const response = await axios.get(
         `http://localhost:8000/article/id/${articleId}`,
         {
-          headers: {
-            // sending authorization header to send JWT as bearer token to authorize request
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true, // for cookie
         }
       );
 
@@ -56,10 +51,7 @@ const EditArticle = () => {
           content,
         },
         {
-          headers: {
-            // sending authorization header to send JWT as bearer token to authorize edit article request
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true, // for cookie
         }
       );
 
@@ -97,7 +89,7 @@ const EditArticle = () => {
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-sky-500 mb-2.5"
           required
         />
-        <textarea
+        {/* <textarea
           placeholder="Type here ..."
           cols="30"
           rows="15"
@@ -105,7 +97,8 @@ const EditArticle = () => {
           onChange={(e) => setContent(e.target.value)}
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-sky-500 mb-2.5"
           required
-        />
+        /> */}
+        <Editor content={content} setContent={setContent} />
         <button
           onClick={() => editArticle(id)}
           className="shadow bg-blue-500 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-10"

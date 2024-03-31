@@ -8,9 +8,6 @@ import formatNumber from "../utils/formatNumber";
 const Articles = () => {
   const [articles, setArticles] = useState([]);
 
-  // get token from localstorage
-  const token = localStorage.getItem("token");
-
   // get all articles
   const fetchAllArticles = async () => {
     try {
@@ -18,10 +15,7 @@ const Articles = () => {
       const response = await axios.get(
         "http://localhost:8000/article/fetch-all",
         {
-          headers: {
-            // sending authorization header to send JWT as bearer token to authorize request
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true, // for cookie
         }
       );
 
@@ -41,20 +35,26 @@ const Articles = () => {
     <div className="container w-4/5 px-4 py-8 mx-auto">
       <h1 className="text-2xl font-bold text-center mb-8">Latest Articles</h1>
 
-      <div className="flex flex-wrap justify-center -mx-4">
+      <div className="flex flex-wrap -mx-4">
         {articles.map((article, index) => (
           <Link
             to={`/article/${article.slug}`}
             className="w-full sm:w-1/2 lg:w-1/2 px-4 mb-8"
             key={`article-${index}`}
           >
-            <div className="border border-gray-200 rounded-lg p-6 transition duration-300 hover:shadow-md">
+            <div className="border border-gray-300 rounded-lg p-6 transition duration-300 hover:shadow-md">
               <h1 className="text-xl font-bold mb-2 overflow-hidden overflow-ellipsis">
                 {article.title}
               </h1>
-              <h3 className="text-base text-slate-600 mb-4 overflow-hidden overflow-ellipsis">
+              <h3 className="text-base text-slate-600 mb-3 overflow-hidden overflow-ellipsis">
                 {article.description}
               </h3>
+
+              <div className="flex items-center mb-3">
+                <p className="text-base text-slate-600">
+                  Author: {article.user.username}
+                </p>
+              </div>
 
               <div className="flex items-center justify-between">
                 <p className="text-base text-slate-600">

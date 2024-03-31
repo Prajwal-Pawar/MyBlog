@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import useAuth from "../hooks/useAuth";
 
 // private routes cant be accessed without login
 const PrivateRoute = ({ children }) => {
-  // get token from localstorage
-  const token = localStorage.getItem("token");
-
-  const [authToken, setAuthToken] = useState(token);
+  // get user from context
+  const { user, loading } = useAuth();
 
   // using location to update page when token changes
   const location = useLocation();
@@ -15,18 +13,14 @@ const PrivateRoute = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setAuthToken(localStorage.getItem("token"));
-
-    // if authToken exists, decode jwt token, else null
-    const decoded = authToken ? jwtDecode(authToken) : null;
     // if current time is bigger than jwt expiration time, then token is expired
-    const isTokenExpired = decoded ? Date.now() >= decoded.exp * 1000 : null;
+    const isTokenExpired = user ? Date.now() >= user.exp * 1000 : null;
 
-    // if token doesn't exist or token is expired, redirect to login
-    if (!authToken || isTokenExpired) {
+    // if user doesn't exist or token is expired, redirect to login
+    if (!loading && (!user || isTokenExpired)) {
       return navigate("/login");
     }
-  }, [location, authToken]);
+  }, [location, user, loading]);
 
   // if token exists, means user is logged in so render component
   return children;

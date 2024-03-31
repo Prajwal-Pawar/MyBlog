@@ -10,12 +10,9 @@ const ChangePassword = () => {
 
   const navigate = useNavigate();
 
-  // get token from localstorage
-  const token = localStorage.getItem("token");
-
   // change password
   const changeUserPassword = async (event) => {
-    // prevent default behaviour of form submit
+    // prevent default behavior of form submit
     event.preventDefault();
 
     try {
@@ -27,10 +24,7 @@ const ChangePassword = () => {
           newPassword,
         },
         {
-          headers: {
-            // sending authorization header to send JWT as bearer token to authorize change password request
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true, // for cookie
         }
       );
 

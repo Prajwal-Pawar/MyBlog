@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import Editor from "../components/Editor";
 
 const CreateArticle = () => {
   // hooks
@@ -11,16 +12,11 @@ const CreateArticle = () => {
 
   const navigate = useNavigate();
 
-  // get token from localstorage
-  const token = localStorage.getItem("token");
-
   // create article
   const createArticle = async (event) => {
     try {
-      // prevent default behaviour of form submit
+      // prevent default behavior of form submit
       event.preventDefault();
-
-      console.log(token, "inside createarticle req");
 
       // getting response from server for create article API
       const response = await axios.post(
@@ -31,10 +27,7 @@ const CreateArticle = () => {
           content,
         },
         {
-          headers: {
-            // sending authorization header to send JWT as bearer token to authorize create article request
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true, // for cookie
         }
       );
 
@@ -79,7 +72,7 @@ const CreateArticle = () => {
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-sky-500 mb-2.5"
           required
         />
-        <textarea
+        {/* <textarea
           placeholder="Type here ..."
           cols="30"
           rows="15"
@@ -87,7 +80,8 @@ const CreateArticle = () => {
           onChange={(e) => setContent(e.target.value)}
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-sky-500 mb-2.5"
           required
-        />
+        /> */}
+        <Editor content={content} setContent={setContent} />
         <button className="shadow bg-emerald-500 hover:bg-emerald-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mb-10">
           Publish
         </button>

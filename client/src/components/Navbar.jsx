@@ -1,25 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdSearch } from "react-icons/md";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
-  // get token from localstorage
-  const token = localStorage.getItem("token");
-
-  const [authToken, setAuthToken] = useState(token);
+  // get user from context API
+  const { user, logout } = useAuth();
 
   // using location to update navbar after auth
   const location = useLocation();
 
-  // logout
-  const logout = () => {
-    setAuthToken(null);
-    localStorage.removeItem("token");
-  };
-
-  useEffect(() => {
-    setAuthToken(localStorage.getItem("token"));
-  }, [location, authToken]);
+  // useEffect(() => {
+  //   setAuthToken(localStorage.getItem("token"));
+  // }, [location, authToken]);
 
   return (
     <div className="navbar w-4/5 flex flex-row justify-between items-center m-auto mt-5">
@@ -29,19 +22,24 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div>
-        {authToken ? (
-          <div className="flex justify-center items-center">
-            {/* search bar */}
-            <div className="flex items-center border border-gray-300 rounded-md px-3 py-1 mr-4">
-              <MdSearch className="h-6 w-6 mr-2 text-gray-600" />
-              <input
-                type="text"
-                placeholder="Search articles.."
-                className="outline-none placeholder-gray-500 flex-grow"
-              />
-            </div>
+      {/* if user exists, render search bar */}
+      {user && (
+        <div className="w-2/5">
+          {/* search bar */}
+          <div className="flex items-center border border-gray-300 rounded-md px-3 py-1 mr-4">
+            <MdSearch className="h-6 w-6 mr-2 text-gray-600" />
+            <input
+              type="text"
+              placeholder="Search articles.."
+              className="outline-none placeholder-gray-500 flex-grow"
+            />
+          </div>
+        </div>
+      )}
 
+      <div>
+        {user ? (
+          <div className="flex justify-center items-center">
             <ul className="flex flex-row">
               <li className="mr-5 hover:text-blue-700">
                 <Link to="/article/create">create</Link>
@@ -56,10 +54,10 @@ const Navbar = () => {
           </div>
         ) : (
           <ul className="flex flex-row">
-            <li className="mr-5">
+            <li className="mr-5 hover:text-blue-700">
               <Link to="/signup">sign up</Link>
             </li>
-            <li className="mr-5">
+            <li className="mr-5 hover:text-blue-700">
               <Link to="/login">sign in</Link>
             </li>
           </ul>

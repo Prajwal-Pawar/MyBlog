@@ -10,18 +10,12 @@ const UserArticles = () => {
 
   const navigate = useNavigate();
 
-  // get token from localstorage
-  const token = localStorage.getItem("token");
-
   // get user articles
   const fetchUserArticles = async () => {
     try {
       // getting response from server for fetch all article API
       const response = await axios.get("http://localhost:8000/user/articles", {
-        headers: {
-          // sending authorization header to send JWT as bearer token to authorize request
-          Authorization: `Bearer ${token}`,
-        },
+        withCredentials: true, // for cookie
       });
 
       setUserArticles(response.data.articles);
@@ -41,12 +35,9 @@ const UserArticles = () => {
     try {
       // getting response from server for delete article API
       const response = await axios.delete(
-        `http://localhost:8000/article//delete/${articleId}`,
+        `http://localhost:8000/article/delete/${articleId}`,
         {
-          headers: {
-            // sending authorization header to send JWT as bearer token to authorize request
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true, // for cookie
         }
       );
 

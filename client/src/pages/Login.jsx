@@ -2,31 +2,39 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   // hooks
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // get setUser from context API
+  const { setUser } = useAuth();
+
   // to redirect user
   const navigate = useNavigate();
 
   // login user
   const loginUser = async (event) => {
-    // prevent default behaviour of form submit
+    // prevent default behavior of form submit
     event.preventDefault();
 
     try {
-      // getting response from server for signup API
-      const response = await axios.post("http://localhost:8000/user/login", {
-        username,
-        password,
-      });
+      // getting response from server for login API
+      const response = await axios.post(
+        "http://localhost:8000/user/login",
+        {
+          username,
+          password,
+        },
+        { withCredentials: true } // for cookie
+      );
 
       console.log(response.data);
 
-      // save JWT/bearer token in localstorage to persistent user session
-      localStorage.setItem("token", response.data.token);
+      // set user in context after login
+      setUser(response.data.user);
 
       // showing message to user
       toast.success(response.data.message);
