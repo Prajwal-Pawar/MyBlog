@@ -1,18 +1,31 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdSearch } from "react-icons/md";
 import useAuth from "../hooks/useAuth";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
   // get user from context API
   const { user, logout } = useAuth();
 
   // using location to update navbar after auth
   const location = useLocation();
 
-  // useEffect(() => {
-  //   setAuthToken(localStorage.getItem("token"));
-  // }, [location, authToken]);
+  const navigate = useNavigate();
+
+  // console.log(location);
+
+  useEffect(() => {
+    // use debouncing for optimizing search api calls
+    const debounce = setTimeout(() => {
+      navigate(searchQuery ? `?query=${searchQuery}` : navigate("/"));
+
+      console.log(location.search);
+    }, 300);
+
+    return () => clearTimeout(debounce);
+  }, [searchQuery]);
 
   return (
     <div className="navbar w-4/5 flex flex-row justify-between items-center m-auto mt-5">
@@ -22,8 +35,8 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* if user exists, render search bar */}
-      {user && (
+      {/* if user exists, and we are on homepage (/ route) render search bar */}
+      {user && location.pathname == "/" && (
         <div className="w-2/5">
           {/* search bar */}
           <div className="flex items-center border border-gray-300 rounded-md px-3 py-1 mr-4">
@@ -31,6 +44,8 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search articles.."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="outline-none placeholder-gray-500 flex-grow"
             />
           </div>

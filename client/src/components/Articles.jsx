@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
 import formatNumber from "../utils/formatNumber";
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
+
+  const location = useLocation();
+
+  // get searchQuery from query from location.search
+  const searchQuery = new URLSearchParams(location.search).get("query");
 
   // get all articles
   const fetchAllArticles = async () => {
@@ -16,6 +22,10 @@ const Articles = () => {
         "http://localhost:8000/article/fetch-all",
         {
           withCredentials: true, // for cookie
+          // query params
+          params: {
+            searchQuery, // send searchQuery as query param to the api
+          },
         }
       );
 
@@ -29,7 +39,7 @@ const Articles = () => {
 
   useEffect(() => {
     fetchAllArticles();
-  }, []);
+  }, [location.search]);
 
   return (
     <div className="container w-4/5 px-4 py-8 mx-auto">
@@ -51,8 +61,8 @@ const Articles = () => {
               </h3>
 
               <div className="flex items-center mb-3">
-                <p className="text-base text-slate-600">
-                  Author: {article.user.username}
+                <p className=" flex text-base text-slate-600">
+                  <FaRegUser className="mr-3 mt-1" /> {article.user.username}
                 </p>
               </div>
 
