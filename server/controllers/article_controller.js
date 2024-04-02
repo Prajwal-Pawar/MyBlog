@@ -26,9 +26,26 @@ module.exports.create = async (req, res) => {
 };
 
 // get all articles
-module.exports.fetchAllArticles = async (_, res) => {
+module.exports.fetchAllArticles = async (req, res) => {
   try {
-    const articles = await Article.find({})
+    // query params from api url are stored in req.query
+    // destructure searchQuery from req.query
+    const { searchQuery } = req.query;
+
+    // this query will be the search filter query for the Article.find
+    let query = {};
+
+    // if searchQuery exists, it will filter articles based on title and users
+    if (searchQuery) {
+      query = {
+        $or: [
+          { title: { $regex: searchQuery, $options: "i" } },
+          // { username: { $regex: searchQuery } },
+        ],
+      };
+    }
+
+    const articles = await Article.find(query)
       .sort({
         createdAt: "desc",
       })
